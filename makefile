@@ -1,6 +1,6 @@
 deploy:
 	npm run build
-	cd out
+	mv out docs
 	git checkout gh-pages
 	git add .
 	git commit -m "Deploy"
