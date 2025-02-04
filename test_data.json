@@ -1,0 +1,72 @@
+[
+  {
+    "comparison_id": "example_01_a_vs_b",
+    "output_id": "cat_facts",
+    "model_outputs": [
+      {
+        "model_id": "model_A",
+        "text": "Cats are small, carnivorous mammals that have been domesticated for thousands of years. They are valued by humans for companionship."
+      },
+      {
+        "model_id": "model_B",
+        "text": "Domestic cats typically weigh between 4–5 kilograms. They are beloved pets known for their agility, curiosity, and independence."
+      }
+    ]
+  },
+  {
+    "comparison_id": "example_02_a_vs_c",
+    "output_id": "definition",
+    "model_outputs": [
+      {
+        "model_id": "model_A",
+        "text": "A definition is a statement that explains the meaning of a term or concept. It clarifies usage and context."
+      },
+      {
+        "model_id": "model_C",
+        "text": "Definitions help us better understand words and ideas by articulating their essential meaning and scope."
+      }
+    ]
+  },
+  {
+    "comparison_id": "example_03_b_vs_c",
+    "output_id": "advice",
+    "model_outputs": [
+      {
+        "model_id": "model_B",
+        "text": "Always plan ahead but be flexible enough to adapt to unforeseen changes. Embrace challenges as learning opportunities."
+      },
+      {
+        "model_id": "model_C",
+        "text": "Focus on your strengths, but never neglect working on your weaknesses. Consistent effort compounds over time."
+      }
+    ]
+  },
+  {
+    "comparison_id": "example_04_a_vs_b",
+    "output_id": "film_synopsis",
+    "model_outputs": [
+      {
+        "model_id": "model_A",
+        "text": "A young hero embarks on a perilous journey to save their kingdom, forging unexpected alliances along the way."
+      },
+      {
+        "model_id": "model_B",
+        "text": "In this thrilling fantasy adventure, the protagonist must confront their past while battling an ancient evil that threatens the realm."
+      }
+    ]
+  },
+  {
+    "comparison_id": "example_05_b_vs_c",
+    "output_id": "travel_tip",
+    "model_outputs": [
+      {
+        "model_id": "model_B",
+        "text": "Pack light, bring a reusable water bottle, and research local customs to ensure respectful and eco-friendly travel."
+      },
+      {
+        "model_id": "model_C",
+        "text": "Learning basic local phrases can help break the ice and show respect for the culture. It often leads to a more immersive experience."
+      }
+    ]
+  }
+]
