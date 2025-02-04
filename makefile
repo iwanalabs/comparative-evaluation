@@ -1,7 +1,6 @@
-deploy:
+build:
 	npm run build
-	mv out docs
-	git checkout gh-pages
-	git add .
-	git commit -m "Deploy"
-	git push -u origin gh-pages --force
+	rm -rf docs/
+	mv out/ docs/
+	echo "compare.iwanalabs.com" > docs/CNAME
+
