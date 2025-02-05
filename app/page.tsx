@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "@/components/Navbar"
 import ComparisonContainer from "@/components/ComparisonContainer"
 import JsonInput from "@/components/JsonInput"
@@ -33,6 +33,59 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Skip if focus is on an input or if meta/ctrl/alt are pressed
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement ||
+        event.altKey || event.metaKey || event.ctrlKey
+      ) {
+        return
+      }
+
+      const currentComparisonId = comparisons[currentIndex]?.comparison_id
+
+      switch (event.key) {
+        case "a":
+        case "A":
+          if (currentComparisonId) {
+            event.preventDefault()
+            handleSelection(currentComparisonId, "left")
+          }
+          break
+        case "b":
+        case "B":
+          if (currentComparisonId) {
+            event.preventDefault()
+            handleSelection(currentComparisonId, "right")
+          }
+          break
+        case "t":
+        case "T":
+          if (currentComparisonId) {
+            event.preventDefault()
+            handleSelection(currentComparisonId, "tie")
+          }
+          break
+        case "ArrowRight":
+        case "Enter":
+          event.preventDefault()
+          handleNext()
+          break
+        case "ArrowLeft":
+          event.preventDefault()
+          setCurrentIndex((prev) => Math.max(0, prev - 1))
+          break
+        default:
+          break
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [comparisons, currentIndex, handleSelection])
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Navbar />
@@ -59,4 +112,3 @@ export default function Home() {
     </div>
   )
 }
-
