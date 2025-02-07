@@ -7,12 +7,14 @@ import {
 } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import type { Comparison } from "@/types";
 import { Badge } from "@/components/ui/badge";
 
 type ComparisonContainerProps = {
   comparison: Comparison;
   onSelection: (comparisonId: string, choice: string) => void;
+  onCommentChange: (comparisonId: string, comment: string) => void;
   selectedChoice: string | undefined;
   isResponded: boolean;
 };
@@ -20,6 +22,7 @@ type ComparisonContainerProps = {
 export default function ComparisonContainer({
   comparison,
   onSelection,
+  onCommentChange,
   selectedChoice,
   isResponded,
 }: ComparisonContainerProps) {
@@ -66,6 +69,18 @@ export default function ComparisonContainer({
             <Label htmlFor="tie">Tie</Label>
           </div>
         </RadioGroup>
+        <div className="mt-6">
+          <Label htmlFor="comment" className="text-sm font-medium">
+            Comments (optional)
+          </Label>
+          <Textarea
+            id="comment"
+            placeholder="Add any comments or explanations about your choice..."
+            className="mt-2"
+            value={comparison.comment || ""}
+            onChange={(e) => onCommentChange(comparison.comparison_id, e.target.value)}
+          />
+        </div>
       </CardContent>
     </Card>
   );

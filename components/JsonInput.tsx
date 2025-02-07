@@ -4,10 +4,18 @@ import { Label } from "@/components/ui/label"
 import type { Comparison } from "@/types"
 
 type JsonInputProps = {
-  onDataLoaded: (data: Comparison[]) => void
+  onDataLoaded: (data: Comparison[]) => void;
+  userSelections?: Record<string, string>;
+  userComments?: Record<string, string>;
+  comparisons?: Comparison[];
 }
 
-export default function JsonInput({ onDataLoaded }: JsonInputProps) {
+export default function JsonInput({ 
+  onDataLoaded, 
+  userSelections = {}, 
+  userComments = {}, 
+  comparisons = [] 
+}: JsonInputProps) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {

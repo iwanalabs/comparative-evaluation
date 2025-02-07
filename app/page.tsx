@@ -11,18 +11,24 @@ export default function Home() {
   const [comparisons, setComparisons] = useState<Comparison[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [userSelections, setUserSelections] = useState<Record<string, string>>({})
+  const [userComments, setUserComments] = useState<Record<string, string>>({})
   const [respondedComparisons, setRespondedComparisons] = useState<Set<string>>(new Set())
 
   const handleDataLoaded = (data: Comparison[]) => {
     setComparisons(data)
     setCurrentIndex(0)
     setUserSelections({})
+    setUserComments({})
     setRespondedComparisons(new Set())
   }
 
   const handleSelection = (comparisonId: string, choice: string) => {
     setUserSelections((prev) => ({ ...prev, [comparisonId]: choice }))
     setRespondedComparisons((prev) => new Set(prev).add(comparisonId))
+  }
+
+  const handleCommentChange = (comparisonId: string, comment: string) => {
+    setUserComments((prev) => ({ ...prev, [comparisonId]: comment }))
   }
 
   const handleNext = (index?: number) => {
@@ -84,28 +90,41 @@ export default function Home() {
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [comparisons, currentIndex, handleSelection])
+  }, [comparisons, currentIndex])
+
+  // Create a version of comparisons with comments for the current view
+  const currentComparison = comparisons[currentIndex] ? {
+    ...comparisons[currentIndex],
+    comment: userComments[comparisons[currentIndex].comparison_id] || ""
+  } : null
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <JsonInput onDataLoaded={handleDataLoaded} />
+        <JsonInput 
+          onDataLoaded={handleDataLoaded}
+          userSelections={userSelections}
+          userComments={userComments}
+          comparisons={comparisons}
+        />
         <Navigation
           currentIndex={currentIndex}
           totalComparisons={comparisons.length}
           onPrevious={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
           onNext={handleNext}
           userSelections={userSelections}
+          userComments={userComments}
           comparisons={comparisons}
           respondedComparisons={respondedComparisons}
         />
-        {comparisons.length > 0 && (
+        {currentComparison && (
           <ComparisonContainer
-            comparison={comparisons[currentIndex]}
+            comparison={currentComparison}
             onSelection={handleSelection}
-            selectedChoice={userSelections[comparisons[currentIndex].comparison_id]}
-            isResponded={respondedComparisons.has(comparisons[currentIndex].comparison_id)}
+            onCommentChange={handleCommentChange}
+            selectedChoice={userSelections[currentComparison.comparison_id]}
+            isResponded={respondedComparisons.has(currentComparison.comparison_id)}
           />
         )}
       </main>

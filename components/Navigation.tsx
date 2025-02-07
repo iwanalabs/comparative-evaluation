@@ -13,6 +13,7 @@ type NavigationProps = {
   onPrevious: () => void;
   onNext: (index?: number) => void;
   userSelections: Record<string, string>;
+  userComments: Record<string, string>;
   comparisons: Comparison[];
   respondedComparisons: Set<string>;
 };
@@ -23,6 +24,7 @@ export default function Navigation({
   onPrevious,
   onNext,
   userSelections,
+  userComments,
   comparisons,
   respondedComparisons,
 }: NavigationProps) {
@@ -32,6 +34,7 @@ export default function Navigation({
       "output_id",
       "chosen_side",
       "chosen_model_id",
+      "comment"
     ];
     const rows = [headers];
 
@@ -39,6 +42,7 @@ export default function Navigation({
       const compId = comp.comparison_id;
       const outId = comp.output_id;
       const choice = userSelections[compId] || "";
+      const comment = userComments[compId] || "";
       let chosenModel = "";
       if (choice === "left") {
         chosenModel = comp.model_outputs[0].model_id;
@@ -47,10 +51,15 @@ export default function Navigation({
       } else if (choice === "tie") {
         chosenModel = "tie";
       }
-      rows.push([compId, outId, choice, chosenModel]);
+      rows.push([compId, outId, choice, chosenModel, comment]);
     });
 
-    const csvContent = rows.map((r) => r.join(",")).join("\n");
+    const csvContent = rows.map((r) => r.map(cell => 
+      // Escape CSV special characters and wrap in quotes if needed
+      cell.includes(',') || cell.includes('"') || cell.includes('\n') 
+        ? `"${cell.replace(/"/g, '""')}"` 
+        : cell
+    ).join(",")).join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
