@@ -53,22 +53,19 @@ export default function Home() {
       const currentComparisonId = comparisons[currentIndex]?.comparison_id
 
       switch (event.key) {
-        case "a":
-        case "A":
+        case "1":
           if (currentComparisonId) {
             event.preventDefault()
             handleSelection(currentComparisonId, "left")
           }
           break
-        case "b":
-        case "B":
+        case "2":
           if (currentComparisonId) {
             event.preventDefault()
             handleSelection(currentComparisonId, "right")
           }
           break
-        case "t":
-        case "T":
+        case "3":
           if (currentComparisonId) {
             event.preventDefault()
             handleSelection(currentComparisonId, "tie")

@@ -28,19 +28,20 @@ export default function ComparisonContainer({
 }: ComparisonContainerProps) {
   return (
     <Card className="mb-8">
-      <CardHeader>
+      <CardHeader className="py-3">
         <div className="flex justify-between items-center">
-          <CardTitle>Comparison #{comparison.comparison_id}</CardTitle>
+          <CardTitle className="text-gray-400 text-sm font-normal">
+            Output ID: {comparison.output_id}
+          </CardTitle>
           {isResponded && <Badge variant="outline">Responded</Badge>}
         </div>
-        <CardDescription>Output ID: {comparison.output_id}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid md:grid-cols-2 gap-4">
           {comparison.model_outputs.map((output, index) => (
             <div key={index} className="border rounded-lg p-4">
               <h3 className="font-bold text-lg mb-2">
-                Answer {index === 0 ? "A" : "B"}
+                Answer {index === 0 ? "1" : "2"}
               </h3>
               <p className="whitespace-pre-wrap">{output.text}</p>
             </div>
@@ -58,11 +59,11 @@ export default function ComparisonContainer({
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="left" id="left" />
-            <Label htmlFor="left">Answer A</Label>
+            <Label htmlFor="left">Answer 1</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="right" id="right" />
-            <Label htmlFor="right">Answer B</Label>
+            <Label htmlFor="right">Answer 2</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="tie" id="tie" />
@@ -78,7 +79,9 @@ export default function ComparisonContainer({
             placeholder="Add any comments or explanations about your choice..."
             className="mt-2"
             value={comparison.comment || ""}
-            onChange={(e) => onCommentChange(comparison.comparison_id, e.target.value)}
+            onChange={(e) =>
+              onCommentChange(comparison.comparison_id, e.target.value)
+            }
           />
         </div>
       </CardContent>
