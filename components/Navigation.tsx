@@ -136,10 +136,10 @@ export default function Navigation({
           {comparisons.map((comp, index) => (
             <div
               key={comp.comparison_id}
-              className={`h-3 w-12 rounded transition-colors cursor-pointer ${
+              className={`h-3 w-12 rounded transition-colors cursor-pointer border ${
                 respondedComparisons.has(comp.comparison_id)
-                  ? "bg-primary"
-                  : "bg-secondary"
+                  ? "bg-primary border-primary"
+                  : "bg-secondary border-muted-foreground/20"
               } ${
                 currentIndex === index
                   ? "ring-1 ring-primary ring-offset-1"
