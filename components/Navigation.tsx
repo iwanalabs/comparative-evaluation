@@ -16,6 +16,7 @@ type NavigationProps = {
   userComments: Record<string, string>;
   comparisons: Comparison[];
   respondedComparisons: Set<string>;
+  inputFilename?: string;
 };
 
 export default function Navigation({
@@ -27,6 +28,7 @@ export default function Navigation({
   userComments,
   comparisons,
   respondedComparisons,
+  inputFilename,
 }: NavigationProps) {
   const downloadResults = () => {
     const headers = [
@@ -65,7 +67,11 @@ export default function Navigation({
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "pairwise_results.csv";
+    // Use input filename if available, otherwise use default name
+    const outputFilename = inputFilename 
+      ? inputFilename.replace(/\.json$/, '_results.csv')
+      : `${new Date().toISOString()}_results.csv`;
+    a.download = outputFilename;
     a.click();
     URL.revokeObjectURL(url);
   };

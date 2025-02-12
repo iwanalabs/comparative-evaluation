@@ -13,13 +13,15 @@ export default function Home() {
   const [userSelections, setUserSelections] = useState<Record<string, string>>({})
   const [userComments, setUserComments] = useState<Record<string, string>>({})
   const [respondedComparisons, setRespondedComparisons] = useState<Set<string>>(new Set())
+  const [inputFilename, setInputFilename] = useState<string>("")
 
-  const handleDataLoaded = (data: Comparison[]) => {
+  const handleDataLoaded = (data: Comparison[], filename: string) => {
     setComparisons(data)
     setCurrentIndex(0)
     setUserSelections({})
     setUserComments({})
     setRespondedComparisons(new Set())
+    setInputFilename(filename)
   }
 
   const handleSelection = (comparisonId: string, choice: string) => {
@@ -114,6 +116,7 @@ export default function Home() {
           userComments={userComments}
           comparisons={comparisons}
           respondedComparisons={respondedComparisons}
+          inputFilename={inputFilename}
         />
         {currentComparison && (
           <ComparisonContainer

@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 import type { Comparison } from "@/types"
 
 type JsonInputProps = {
-  onDataLoaded: (data: Comparison[]) => void;
+  onDataLoaded: (data: Comparison[], filename: string) => void;
   userSelections?: Record<string, string>;
   userComments?: Record<string, string>;
   comparisons?: Comparison[];
@@ -23,7 +23,7 @@ export default function JsonInput({
       reader.onload = (e) => {
         try {
           const jsonData = JSON.parse(e.target?.result as string)
-          prepareData(jsonData)
+          prepareData(jsonData, file.name)
         } catch (err) {
           alert("Invalid JSON file.")
         }
@@ -32,7 +32,7 @@ export default function JsonInput({
     }
   }
 
-  const prepareData = (jsonData: Comparison[]) => {
+  const prepareData = (jsonData: Comparison[], filename: string) => {
     // Shuffle the list of comparisons
     const shuffled = [...jsonData].sort(() => Math.random() - 0.5)
 
@@ -45,7 +45,7 @@ export default function JsonInput({
       }
     })
 
-    onDataLoaded(shuffled)
+    onDataLoaded(shuffled, filename)
   }
 
   return (
